@@ -11,7 +11,7 @@ namespace KantineApp
 {
     public class Factory
     {
-        public static IData<MenuItem, int> GetRepository()
+        public static IData GetRepository()
         {
             return new Repository();
         }
