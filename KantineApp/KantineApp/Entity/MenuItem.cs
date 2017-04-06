@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace KantineApp.Entity
 {
-    class MenuItem
+    public class MenuItem
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Image { get; set; }
     }
 }

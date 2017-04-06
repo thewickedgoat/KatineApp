@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace KantineApp
 {
-    class Factory
+    public class Factory
     {
+        public static IData
     }
 }
