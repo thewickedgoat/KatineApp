@@ -39,7 +39,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="DLL\Repository.cs" />
-    <Compile Include="Entity\MenuItem.cs" />
+    <Compile Include="Entity\MenuEntity.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Interface\IData.cs" />
     <Compile Include="MainPage.xaml.cs">
