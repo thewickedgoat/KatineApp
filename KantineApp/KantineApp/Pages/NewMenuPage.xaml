@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KantineApp.Pages.NewMenuPage">
+
+  <ScrollView>
+    <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand">
+      <!--menu items are added to the stack below in code-->
+      <StackLayout x:Name="WrapperStack" Orientation="Vertical" VerticalOptions="StartAndExpand">
+      </StackLayout>
+      <StackLayout VerticalOptions="EndAndExpand">
+        <StackLayout Orientation="Horizontal">
+          <Button Text="Tilføj Ret" Clicked="AddMenuItemStack_OnClicked" HorizontalOptions="FillAndExpand"></Button>
+          <Button Text="Gem Menu" HorizontalOptions="FillAndExpand"></Button>
+        </StackLayout>
+      </StackLayout>
+    </StackLayout>
+  </ScrollView>
+</ContentPage>

@@ -8,6 +8,6 @@ namespace KantineApp
 {
     public class Factory
     {
-        public static IData
+        
     }
 }

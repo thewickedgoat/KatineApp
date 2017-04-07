@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:KantineApp"
+             xmlns:pages="clr-namespace:KantineApp.Pages;assembly=KantineApp"
+             x:Class="KantineApp.MainPage">
+
+  <TabbedPage.Children>
+    <pages:NewMenuPage Title="Ny Menu"/>
+    <pages:MenuHistoryPage Title="Alle Menuer"/>
+  </TabbedPage.Children>
+</TabbedPage>
