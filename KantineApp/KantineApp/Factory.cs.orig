@@ -11,9 +11,13 @@ namespace KantineApp
 {
     public class Factory
     {
+<<<<<<< HEAD
+        
+=======
         public static IData GetRepository()
         {
             return new Repository();
         }
+>>>>>>> c6309830958429fef49e245df18f94abe0b81dca
     }
 }

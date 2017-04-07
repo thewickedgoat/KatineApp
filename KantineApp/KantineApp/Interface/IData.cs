@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
+﻿using System.Collections.Generic;
+using KantineApp.Entity;
 
 namespace KantineApp.Interface
 {
-    public interface IData<T>
+    public interface IData
     {
-        void Create();
-        T Read(int id);
-        List<T> ReadAll();
-        T Update(T t);
-        void Delete(int id);
+        void Create(MenuEntity item);
+        MenuEntity Read(int id);
+        List<MenuEntity> ReadAll();
+        bool Update(MenuEntity item);
+        bool Delete(int id);
     }
 }

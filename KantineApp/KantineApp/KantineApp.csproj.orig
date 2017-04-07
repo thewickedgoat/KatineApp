@@ -38,9 +38,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DLL\Repository.cs" />
+<<<<<<< HEAD
+    <Compile Include="Entity\MenuItem.cs" />
     <Compile Include="Entity\TodaysMenu.cs" />
+=======
+    <Compile Include="DLL\Repository.cs" />
     <Compile Include="Entity\MenuEntity.cs" />
+>>>>>>> c6309830958429fef49e245df18f94abe0b81dca
     <Compile Include="Factory.cs" />
     <Compile Include="Interface\IData.cs" />
     <Compile Include="Pages\MainPage.xaml.cs">
@@ -83,6 +87,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
+    <Folder Include="DLL\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\NewMenuPage.xaml">
@@ -95,7 +101,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+=======
     <Folder Include="Pages\" />
+>>>>>>> c6309830958429fef49e245df18f94abe0b81dca
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.3.180\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.3.180\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />

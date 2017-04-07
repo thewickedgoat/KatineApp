@@ -11,6 +11,6 @@ namespace KantineApp.Entity
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
-        public List<MenuItem> MenuItems { get; set; }
+        public List<MenuEntity> MenuItems { get; set; }
     }
 }
