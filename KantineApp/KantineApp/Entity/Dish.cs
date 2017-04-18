@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace KantineApp.Entity
 {
-    public class MenuEntity
+    public class Dish
     {
-        public int Id { get; set; }
-        public DateTime Date { get; set; }
-        public List<Dish> Dishes { get; set; }
+        public int? Id { get; set; }
+        public string Name { get; set; }
+        public string Image { get; set; }
     }
 }

@@ -11,9 +11,16 @@ namespace KantineApp
 {
     public class Factory
     {
-        public static IData GetRepository()
+        //private static Repository _repo;
+        private static MockRepository _repo;
+
+        /// <summary>
+        /// Static method enables calling the class directly instead of creating a new instance of it for access. 
+        /// Get existing instance or create one if it does not exist.        
+        /// </summary>
+        public static IRepository GetRepository
         {
-            return new Repository();
+            get { return _repo ?? (_repo = new MockRepository()); }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using KantineApp.Entity;
 using KantineApp.Interface;
@@ -6,41 +7,31 @@ using Xamarin.Forms;
 
 namespace KantineApp.DLL
 {
-    public class Repository : IData
+    public class Repository : IRepository
     {
-        private List<MenuEntity> _items = new List<MenuEntity>();
-        public void Create(MenuEntity item)
+        public void Create(MenuEntity menu)
         {
-            _items.Add(item);
+            throw new NotImplementedException();
         }
 
         public MenuEntity Read(int id)
         {
-            return SelectedItem(id);
+            throw new NotImplementedException();
         }
 
         public List<MenuEntity> ReadAll()
         {
-            return _items;
+            throw new NotImplementedException();
         }
 
-        public bool Update(MenuEntity item)
+        public bool Update(MenuEntity menu)
         {
-            _items.Remove(SelectedItem(item.Id));
-            _items.Add(item);
-            return true;
+            throw new NotImplementedException();
         }
 
         public bool Delete(int id)
         {
-            _items.Remove(SelectedItem(id));
-            return true;
+            throw new NotImplementedException();
         }
-
-        public MenuEntity SelectedItem(int id)
-        {
-            return _items.FirstOrDefault(x => x.Id == id);
-        }
-
     }
 }

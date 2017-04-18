@@ -1,17 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
              x:Class="KantineApp.Pages.NewMenuPage">
 
   <ScrollView>
-    <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand">
-      <!--menu items are added to the stack below in code-->
-      <StackLayout x:Name="WrapperStack" Orientation="Vertical" VerticalOptions="StartAndExpand">
+    <StackLayout x:Name="OuterWrapperStack" Orientation="Vertical" VerticalOptions="FillAndExpand">
+      <StackLayout x:Name="DateStack">
+        <DatePicker x:Name="Picker" VerticalOptions="CenterAndExpand">
+          <DatePicker.Format>dd-MM-yyyy</DatePicker.Format>        
+        </DatePicker>
       </StackLayout>
-      <StackLayout VerticalOptions="EndAndExpand">
-        <StackLayout Orientation="Horizontal">
-          <Button Text="Tilføj Ret" Clicked="AddMenuItemStack_OnClicked" HorizontalOptions="FillAndExpand"></Button>
-          <Button Text="Gem Menu" HorizontalOptions="FillAndExpand"></Button>
+      <StackLayout x:Name="DishWrapperStack" Orientation="Vertical" VerticalOptions="StartAndExpand">
+        <!--Dish stacklayouts are added here from code-->
+      </StackLayout>
+      <StackLayout x:Name="OptionWrapperStack" VerticalOptions="EndAndExpand">
+        <StackLayout x:Name="OptionsStack" Orientation="Horizontal">
+          <Button x:Name="NewDishStackBtn" Text="Tilføj Ret" Clicked="AddDishStak" HorizontalOptions="FillAndExpand"></Button>
+          <Button x:Name="CreateMenuBtn" Text="Gem Menu" HorizontalOptions="FillAndExpand" Clicked="CreateNewMenu_Button_OnClicked"></Button>
         </StackLayout>
       </StackLayout>
     </StackLayout>
