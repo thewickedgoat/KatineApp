@@ -40,9 +40,10 @@ namespace KantineApp.Pages
         public List<StackLayout> CreateMenuStack()
         {
             _menus = _repo.ReadAll();
+            var menusSortedByDate = _menus.OrderByDescending(x => x.Date.Date).ThenByDescending(x => x.Date.Year);
 
             var menuStacks = new List<StackLayout>();
-            foreach (var menu in _menus)
+            foreach (var menu in menusSortedByDate)
             {
                 var menuStack = new StackLayout();
                 menuStack.Children.Add(new Label()

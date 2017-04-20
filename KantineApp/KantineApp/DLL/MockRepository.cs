@@ -34,7 +34,7 @@ namespace KantineApp.DLL
             },
             new MenuEntity()
             {
-                Id = 2, Date = DateTime.Now, Dishes = new List<Dish>()
+                Id = 2, Date = DateTime.Now.AddDays(4), Dishes = new List<Dish>()
                 {
                     new Dish()
                     {
