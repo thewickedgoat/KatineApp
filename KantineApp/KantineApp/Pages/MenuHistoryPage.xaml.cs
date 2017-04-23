@@ -48,7 +48,7 @@ namespace KantineApp.Pages
                 var menuStack = new StackLayout();
                 menuStack.Children.Add(new Label()
                 {
-                    Text = menu.Date.ToString(),
+                    Text = string.Format(menu.Date.Day + "/" + menu.Date.Month + " - " + menu.Date.Year),
                     HeightRequest = 60,
                     BackgroundColor = Color.Gray,
                     FontAttributes = FontAttributes.Bold,
