@@ -11,14 +11,37 @@ namespace KantineApp.Pages
 {
     public partial class NewMenuPage : ContentPage
     {
+        private ICameraHandler _cameraHandler;
         readonly IRepository _repo = Factory.GetRepository;
         readonly List<Entry> _dishes = new List<Entry>();
+
+        private Button takePhoto;
+        private Button pickPhoto;
 
         public NewMenuPage()
         {
             InitializeComponent();
             DishWrapperStack.Children.Add(NewDishStack());
+
+            takePhoto.Clicked += (sender, args) => { TakePhoto(); };
+
+            pickPhoto.Clicked += (sender, args) => { PickPhoto(); };
+
+            _cameraHandler = DependencyService.Get<ICameraHandler>();
         }
+
+        private void PickPhoto()
+        {
+            DisplayAlert("Info", "Pick a photo is NOT IMPLEMENTED YET!", "OK");
+        }
+
+        private void TakePhoto()
+        {
+            _cameraHandler.AddPhotoTakenEventHandler(PhotoReceived);
+            _cameraHandler.TakePhoto();
+        }
+        public void PhotoReceived(string fileName)
+        { image.Source = fileName; lblFileName.Text = fileName; }
 
         /// <summary>
         /// Create a new Dish stacklayout, with text-entry and buttons for image options.
@@ -30,8 +53,10 @@ namespace KantineApp.Pages
             var dish = new Entry() { Placeholder = "Rettens navn", HorizontalOptions = LayoutOptions.FillAndExpand };
             dishStack.Children.Add(dish);
             _dishes.Add(dish);
-            dishStack.Children.Add(new Button() { Image = "camera.png" });
-            dishStack.Children.Add(new Button() { Image = "file.png" });
+            takePhoto.Image = "camera.png";
+            pickPhoto.Image = "file.png";
+            dishStack.Children.Add(takePhoto);
+            dishStack.Children.Add(pickPhoto);
 
             return dishStack;
         }
