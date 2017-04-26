@@ -6,28 +6,25 @@ using System.Threading.Tasks;
 using KantineApp.Entity;
 using KantineApp.Interface;
 using Xamarin.Forms;
+using System.Diagnostics;
 
 namespace KantineApp.Pages
 {
     public partial class NewMenuPage : ContentPage
     {
-        private ICameraHandler _cameraHandler;
+        
         readonly IRepository _repo = Factory.GetRepository;
-        readonly List<Entry> _dishes = new List<Entry>();
+        private List<Dish> _dishes = new List<Dish>();
 
-        private Button takePhoto;
-        private Button pickPhoto;
+        private Button takePhotoBtn = new Button();
+        private Button pickPhotoBtn = new Button();
+
+        private Dish _tmpDish = null;
 
         public NewMenuPage()
         {
             InitializeComponent();
             DishWrapperStack.Children.Add(NewDishStack());
-
-            takePhoto.Clicked += (sender, args) => { TakePhoto(); };
-
-            pickPhoto.Clicked += (sender, args) => { PickPhoto(); };
-
-            _cameraHandler = DependencyService.Get<ICameraHandler>();
         }
 
         private void PickPhoto()
@@ -35,13 +32,27 @@ namespace KantineApp.Pages
             DisplayAlert("Info", "Pick a photo is NOT IMPLEMENTED YET!", "OK");
         }
 
-        private void TakePhoto()
+        private void TakePhoto(Dish dish)
         {
+            ICameraHandler _cameraHandler; _cameraHandler = DependencyService.Get<ICameraHandler>();
             _cameraHandler.AddPhotoTakenEventHandler(PhotoReceived);
+            if (_tmpDish != null)
+                Debug.WriteLine("one try");
+            _tmpDish = dish;
             _cameraHandler.TakePhoto();
         }
+
+        
+
         public void PhotoReceived(string fileName)
-        { image.Source = fileName; lblFileName.Text = fileName; }
+        {
+            _tmpDish.Image = fileName;
+            _tmpDish = null;
+            Debug.WriteLine(fileName);
+            //newImage.Source = null;
+            //newImage.Source = fileName;
+
+        }
 
         /// <summary>
         /// Create a new Dish stacklayout, with text-entry and buttons for image options.
@@ -49,16 +60,29 @@ namespace KantineApp.Pages
         /// <returns></returns>
         public StackLayout NewDishStack()
         {
+            takePhotoBtn = new Button();
+            pickPhotoBtn = new Button();
+            Dish dish = new Dish();
             var dishStack = new StackLayout() { Orientation = StackOrientation.Horizontal, VerticalOptions = LayoutOptions.StartAndExpand };
-            var dish = new Entry() { Placeholder = "Rettens navn", HorizontalOptions = LayoutOptions.FillAndExpand };
-            dishStack.Children.Add(dish);
+            var dishName = new Entry() { Placeholder = "Rettens navn", HorizontalOptions = LayoutOptions.FillAndExpand };
+            dishStack.Children.Add(dishName);
+            dish.Name = dishName.Text;
             _dishes.Add(dish);
-            takePhoto.Image = "camera.png";
-            pickPhoto.Image = "file.png";
-            dishStack.Children.Add(takePhoto);
-            dishStack.Children.Add(pickPhoto);
+            takePhotoBtn.Image = "camera.png";
+            pickPhotoBtn.Image = "file.png";
+            dishStack.Children.Add(takePhotoBtn);
+            dishStack.Children.Add(pickPhotoBtn);
+
+            takePhotoBtn.Clicked += (sender, args) => { TakePhoto(dish); };
+            dishName.Completed += (sender, args) => { SaveDishName(dish, dishName.Text); };
+            //pickPhotoBtn.Clicked += (sender, args) => { PickPhoto(dish); };
 
             return dishStack;
+        }
+
+        private void SaveDishName(Dish dish, string dishName)
+        {
+            dish.Name = dishName;
         }
 
         /// <summary>
@@ -83,26 +107,21 @@ namespace KantineApp.Pages
                 Date = Picker.Date,
                 Dishes = new List<Dish>()
             };
-            foreach (var dish in _dishes)
-            {
-                menu.Dishes.Add(new Dish()
-                {
-                    Name = dish.Text
-                });
-            }
+            menu.Dishes = _dishes;
             _repo.Create(menu);
             DishWrapperStack.Children.Clear();
-            _dishes.Clear();
+            _dishes = new List<Dish>();
             DishWrapperStack.Children.Add(NewDishStack());
         }
 
-        protected override void OnAppearing()
+        /**protected override void OnAppearing()
         {
+            Debug.WriteLine("On appering");
             base.OnAppearing();
             DishWrapperStack.Children.Clear();
             _dishes.Clear();
             DishWrapperStack.Children.Add(NewDishStack());
-        }
+        }**/
 
     }
 }

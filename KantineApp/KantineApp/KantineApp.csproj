@@ -43,6 +43,7 @@
     <Compile Include="Entity\Dish.cs" />
     <Compile Include="Entity\MenuEntity.cs" />
     <Compile Include="Factory.cs" />
+    <Compile Include="Gateway\ServiceGateway.cs" />
     <Compile Include="Interface\ICameraHandler.cs" />
     <Compile Include="Interface\IPhotoRecieved.cs" />
     <Compile Include="Interface\IRepository.cs" />

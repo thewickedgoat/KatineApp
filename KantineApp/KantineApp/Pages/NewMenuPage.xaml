@@ -12,7 +12,7 @@
         </DatePicker>
       </StackLayout>
       <StackLayout x:Name="DishWrapperStack" Orientation="Vertical" VerticalOptions="StartAndExpand">
-                <Image x:Name="image"/>
+                <Image x:Name="newImage"/>
                 <Label x:Name="lblFileName" Text="...Filename..." HorizontalOptions="Center"/>
                 <!--Dish stacklayouts are added here from code-->
       </StackLayout>
