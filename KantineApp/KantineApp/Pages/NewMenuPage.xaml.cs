@@ -12,18 +12,22 @@ namespace KantineApp.Pages
 {
     public partial class NewMenuPage : ContentPage
     {
-        
-        readonly IRepository _repo = Factory.GetRepository;
+
+        //readonly IRepository _repo = Factory.GetRepository;
+        private IServiceGateway _serviceGateway = Factory.GetServiceGateway;
         private List<Dish> _dishes = new List<Dish>();
 
         private Button takePhotoBtn = new Button();
         private Button pickPhotoBtn = new Button();
 
         private Dish _tmpDish = null;
+        ICameraHandler _cameraHandler;
 
         public NewMenuPage()
         {
             InitializeComponent();
+            _cameraHandler = DependencyService.Get<ICameraHandler>();
+            _cameraHandler.AddPhotoTakenEventHandler(PhotoReceived); // Callback
             DishWrapperStack.Children.Add(NewDishStack());
         }
 
@@ -34,8 +38,6 @@ namespace KantineApp.Pages
 
         private void TakePhoto(Dish dish)
         {
-            ICameraHandler _cameraHandler; _cameraHandler = DependencyService.Get<ICameraHandler>();
-            _cameraHandler.AddPhotoTakenEventHandler(PhotoReceived);
             if (_tmpDish != null)
                 Debug.WriteLine("one try");
             _tmpDish = dish;
@@ -49,9 +51,6 @@ namespace KantineApp.Pages
             _tmpDish.Image = fileName;
             _tmpDish = null;
             Debug.WriteLine(fileName);
-            //newImage.Source = null;
-            //newImage.Source = fileName;
-
         }
 
         /// <summary>
@@ -108,7 +107,7 @@ namespace KantineApp.Pages
                 Dishes = new List<Dish>()
             };
             menu.Dishes = _dishes;
-            _repo.Create(menu);
+            _serviceGateway.Create(menu);
             DishWrapperStack.Children.Clear();
             _dishes = new List<Dish>();
             DishWrapperStack.Children.Add(NewDishStack());

@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using KantineApp.DLL;
 using KantineApp.Entity;
 using KantineApp.Interface;
+using KantineApp.Gateway;
 
 namespace KantineApp
 {
     public class Factory
     {
-        //private static Repository _repo;
+        private static ServiceGateway _serviceGateway;
         private static MockRepository _repo;
 
         /// <summary>
@@ -21,6 +22,11 @@ namespace KantineApp
         public static IRepository GetRepository
         {
             get { return _repo ?? (_repo = new MockRepository()); }
+        }
+
+        public static IServiceGateway GetServiceGateway
+        {
+            get { return _serviceGateway ?? (_serviceGateway = new ServiceGateway());  }
         }
     }
 }

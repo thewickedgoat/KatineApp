@@ -11,7 +11,8 @@ namespace KantineApp.Pages
 {
     public partial class MenuHistoryPage : ContentPage
     {
-        readonly IRepository _repo = Factory.GetRepository;
+        //readonly IRepository _repo = Factory.GetRepository;
+        private IServiceGateway _serviceGatway = Factory.GetServiceGateway;
         List<MenuEntity> _menus = new List<MenuEntity>();
 
         public MenuHistoryPage()
@@ -24,12 +25,26 @@ namespace KantineApp.Pages
         /// <summary>
         /// Add menu stacklayouts to the wrapper stacklayout.
         /// </summary>
-        public void AddMenuStacksToPage()
+        public async void AddMenuStacksToPage()
         {
-            foreach (var menuStack in CreateMenuStack())
+            var res = await CreateMenuStack();
+
+            foreach (var menuStack in res)
             {
                 MenuHistoryWrapper.Children.Add(menuStack);
             }
+
+            /**var tasks = CreateMenuStack();
+
+            foreach (var task in tasks.)
+            {
+                tasks.Add(new Task(() =>
+                {
+                    // do something with the item in this action
+                }));
+            }
+
+            await Task.WhenAll(tasks);**/
         }
 
         /// <summary>
@@ -37,9 +52,9 @@ namespace KantineApp.Pages
         /// In every menuStack, create a list of dishStack's ; one for each dish in that menu.
         /// </summary>
         /// <returns></returns>
-        public List<StackLayout> CreateMenuStack()
+        public async Task<List<StackLayout>> CreateMenuStack()
         {
-            _menus = _repo.ReadAll();
+            _menus = await _serviceGatway.ReadAll();
             var menusSortedByDate = _menus.OrderByDescending(x => x.Date.Date).ThenByDescending(x => x.Date.Year);
 
             var menuStacks = new List<StackLayout>();
