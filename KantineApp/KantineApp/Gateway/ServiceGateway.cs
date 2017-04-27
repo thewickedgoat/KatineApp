@@ -26,7 +26,6 @@ namespace KantineApp.Gateway
         {
             var uri = new Uri("http://cantine-restapi-webapp.azurewebsites.net/api/Menu");
 
-
             var json = JsonConvert.SerializeObject(menu);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
