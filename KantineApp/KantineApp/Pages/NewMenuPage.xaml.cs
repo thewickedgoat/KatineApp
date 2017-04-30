@@ -42,7 +42,7 @@ namespace KantineApp.Pages
                 Debug.WriteLine("one try");
             _tmpDish = dish;
             _cameraHandler.TakePhoto();
-        }        
+        }
 
         public void PhotoReceived(string fileName)
         {
@@ -57,14 +57,14 @@ namespace KantineApp.Pages
         /// <returns></returns>
         public StackLayout NewDishStack()
         {
-            takePhotoBtn = new Button();
-            pickPhotoBtn = new Button();
+            takePhotoBtn = new Button() { WidthRequest = 50 };
+            pickPhotoBtn = new Button() { WidthRequest = 50 };
             Dish dish = new Dish();
             var dishStack = new StackLayout() { Orientation = StackOrientation.Horizontal, VerticalOptions = LayoutOptions.StartAndExpand };
             var dishName = new Entry() { Placeholder = "Rettens navn", HorizontalOptions = LayoutOptions.FillAndExpand };
             dishStack.Children.Add(dishName);
             dish.Name = dishName.Text;
-            
+
             takePhotoBtn.Image = "camera.png";
             pickPhotoBtn.Image = "file.png";
             dishStack.Children.Add(takePhotoBtn);
