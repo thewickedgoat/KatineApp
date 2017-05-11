@@ -9,6 +9,7 @@
             <StackLayout x:Name="DateStack">
                 <StackLayout BackgroundColor="#313030" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                     <Label Margin="5,0,0,0" TextColor="#ededed" Text="Vælg Dato:" FontSize="Medium" VerticalTextAlignment="Center"></Label>
+                    <DatePicker TextColor="#ededed" x:Name="dPicker" HorizontalOptions="FillAndExpand">
                         <DatePicker.Format>dd-MM-yyyy</DatePicker.Format>
                     </DatePicker>
                 </StackLayout>
