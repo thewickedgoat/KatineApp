@@ -48,21 +48,56 @@ namespace KantineApp.Pages
             foreach (var menu in menusSortedByDate)
             {
                 var menuStack = new StackLayout() { Spacing = 0 };
-                menuStack.Children.Add(new Label()
+                var stack = new StackLayout()
+                {
+                    Orientation = StackOrientation.Horizontal,
+                    BackgroundColor = Color.FromHex("#313030"),
+                };
+                var editBtn = new Button()
+                {
+                    TextColor = Color.FromHex("#ededed"),
+                    BackgroundColor = Color.FromHex("#313030"),
+                    WidthRequest = 50
+                };
+
+                var deleteBtn = new Button()
+                {
+                    TextColor = Color.FromHex("#ededed"),
+                    BackgroundColor = Color.FromHex("#313030"),
+                    WidthRequest = 50,
+                };
+
+                editBtn.Image = "pencil.png";
+                deleteBtn.Image = "delete.png";
+
+                var dateLbl = new Label()
                 {
                     Text = string.Format(menu.Date.Day + "/" + menu.Date.Month + " - " + menu.Date.Year),
-                    HeightRequest = 60,
-                    BackgroundColor = Color.Gray,
-                    FontAttributes = FontAttributes.Bold,
-                    FontSize = 20,
+                    HeightRequest = 45,
+                    BackgroundColor = Color.FromHex("#313030"),
+                    TextColor = Color.FromHex("#ededed"),
+                    FontSize = 18,
                     VerticalTextAlignment = TextAlignment.Center,
-                    HorizontalTextAlignment = TextAlignment.Center
-                });
+                    HorizontalOptions = LayoutOptions.StartAndExpand
+                };
+
+                stack.Children.Add(dateLbl);
+                stack.Children.Add(editBtn);
+                stack.Children.Add(deleteBtn);
+                menuStack.Children.Add(stack);
 
                 /* The dishstack contains a list of dishes.*/
                 var dishStack = new StackLayout() { Orientation = StackOrientation.Vertical };
                 foreach (var dish in menu.Dishes)
                 {
+                    var horizontalLine = new BoxView()
+                    {
+                        VerticalOptions = LayoutOptions.Center,
+                        HorizontalOptions = LayoutOptions.FillAndExpand,
+                        HeightRequest = 1,
+                        Color = Color.FromHex("#222")
+                    };
+
                     /* The dishwrapper wraps a dish with it's image horizontal in the dishstack.*/
                     var dishWrapper = new StackLayout() { Orientation = StackOrientation.Horizontal };
                     dishWrapper.Children.Add(new Label()
@@ -84,6 +119,7 @@ namespace KantineApp.Pages
                         });
                     }
                     dishStack.Children.Add(dishWrapper);
+                    dishStack.Children.Add(horizontalLine);
                 }
                 menuStack.Children.Add(dishStack);
                 menuStacks.Add(menuStack);

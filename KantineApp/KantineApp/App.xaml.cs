@@ -13,7 +13,11 @@ namespace KantineApp
         {
             InitializeComponent();
 
-            MainPage = new KantineApp.MainPage();
+            MainPage = new KantineApp.MainPage()
+            {
+                BarBackgroundColor = Color.FromHex("#222"),
+                BarTextColor = Color.FromHex("#ededed")
+            };            
         }
 
         protected override void OnStart()

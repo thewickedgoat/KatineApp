@@ -5,8 +5,8 @@
              xmlns:pages="clr-namespace:KantineApp.Pages;assembly=KantineApp"
              x:Class="KantineApp.MainPage">
 
-  <TabbedPage.Children>
-    <pages:NewMenuPage Title="Ny Menu"/>
-    <pages:MenuHistoryPage Title="Alle Menuer"/>
-  </TabbedPage.Children>
+    <TabbedPage.Children>
+        <pages:NewMenuPage BackgroundColor="#d8d8d8" Title="Ny Menu"/>
+        <pages:MenuHistoryPage BackgroundColor="#d8d8d8" Title="Alle Menuer"/>
+    </TabbedPage.Children>
 </TabbedPage>

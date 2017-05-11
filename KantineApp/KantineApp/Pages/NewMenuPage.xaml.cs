@@ -16,10 +16,8 @@ namespace KantineApp.Pages
         //readonly IRepository _repo = Factory.GetRepository;
         private IServiceGateway _serviceGateway = Factory.GetServiceGateway;
         private List<Dish> _dishes = new List<Dish>();
-
         private Button takePhotoBtn = new Button();
         private Button pickPhotoBtn = new Button();
-
         private Dish _tmpDish = null;
         ICameraHandler _cameraHandler;
 
@@ -57,11 +55,29 @@ namespace KantineApp.Pages
         /// <returns></returns>
         public StackLayout NewDishStack()
         {
-            takePhotoBtn = new Button() { WidthRequest = 50 };
-            pickPhotoBtn = new Button() { WidthRequest = 50 };
+            takePhotoBtn = new Button()
+            {
+                BackgroundColor = Color.FromHex("#313030"),
+                WidthRequest = 50
+            };
+            pickPhotoBtn = new Button()
+            {
+                BackgroundColor = Color.FromHex("#313030"),
+                WidthRequest = 50
+            };
+
             Dish dish = new Dish();
-            var dishStack = new StackLayout() { Orientation = StackOrientation.Horizontal, VerticalOptions = LayoutOptions.StartAndExpand };
-            var dishName = new Entry() { Placeholder = "Rettens navn", HorizontalOptions = LayoutOptions.FillAndExpand };
+            var dishStack = new StackLayout()
+            {
+                Orientation = StackOrientation.Horizontal,
+                VerticalOptions = LayoutOptions.StartAndExpand
+            };
+            var dishName = new Entry()
+            {
+                Placeholder = "Rettens navn",
+                HorizontalOptions = LayoutOptions.FillAndExpand
+            };
+
             dishStack.Children.Add(dishName);
             dish.Name = dishName.Text;
 
@@ -101,7 +117,7 @@ namespace KantineApp.Pages
         {
             var menu = new MenuEntity()
             {
-                Date = Picker.Date,
+                Date = dPicker.Date,
                 Dishes = new List<Dish>()
             };
             menu.Dishes = _dishes;
