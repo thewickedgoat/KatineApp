@@ -67,6 +67,12 @@ namespace KantineApp.Pages
                     WidthRequest = 50,
                 };
 
+                deleteBtn.Clicked += (sender, EventArgs) =>
+                {
+                    _serviceGatway.Delete(menu.Id);
+                };
+
+
                 editBtn.Image = "pencil.png";
                 deleteBtn.Image = "delete.png";
 

@@ -10,9 +10,9 @@ namespace KantineApp.Interface
     public interface IServiceGateway
     {
         /// <summary>
-         /// Create a menu with an id, date and a list of dishes whith properties; name and image path.
-         /// </summary>
-         /// <param name="menu"></param>
+        /// Create a menu with an id, date and a list of dishes whith properties; name and image path.
+        /// </summary>
+        /// <param name="menu"></param>
         void Create(MenuEntity menu);
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace KantineApp.Interface
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        MenuEntity Read(int id);
+        Task<MenuEntity> Read(int id);
 
         /// <summary>
         /// Get all menus.
@@ -29,13 +29,13 @@ namespace KantineApp.Interface
         Task<List<MenuEntity>> ReadAll();
 
 
-        bool Update(MenuEntity menu);
+        void Update(MenuEntity menu);
 
         /// <summary>
         /// Delete menu by id.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        bool Delete(int id);
+        Task<bool> Delete(int id);
     }
 }

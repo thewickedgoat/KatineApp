@@ -40,19 +40,7 @@ namespace KantineApp.Gateway
         public async void Create(MenuEntity menu)
         {
             var uri = new Uri(API + "/menu");
-
-            foreach (var dish in menu.Dishes)
-            {
-                var bytes = ConvertToByteArray(dish.Image);
-                var imageContent = new StringContent(JsonConvert.SerializeObject(new { dishName = dish.Name, imageBytes = bytes }), Encoding.UTF8, "application/json");
-
-                HttpResponseMessage imageResponse = await client.PostAsync(new Uri(uri + "/UploadImage"), imageContent);
-
-                if (imageResponse.IsSuccessStatusCode)
-                {
-                    dish.Image = imageResponse.Content.ReadAsStringAsync().Result.Replace("\"", "");
-                }
-            }
+            ImageHandler(menu, uri);
 
             var json = JsonConvert.SerializeObject(menu);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -80,14 +68,47 @@ namespace KantineApp.Gateway
 
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            throw new NotImplementedException();
+            var uri = new Uri(API + $"/Menu/{id}");
+            bool isDeleted = false;
+            try
+            {
+                var response = await client.DeleteAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    isDeleted = JsonConvert.DeserializeObject<bool>(content);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return isDeleted;
+
         }
 
-        public MenuEntity Read(int id)
+        public async Task<MenuEntity> Read(int id)
         {
-            throw new NotImplementedException();
+            var uri = new Uri(API + $"/Menu/{id}");
+            MenuEntity menu = null;
+
+            try
+            {
+                var response = await client.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    menu = JsonConvert.DeserializeObject<MenuEntity>(content);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return menu;
+
         }
 
         public async Task<List<MenuEntity>> ReadAll()
@@ -110,9 +131,50 @@ namespace KantineApp.Gateway
             return menus;
         }
 
-        public bool Update(MenuEntity menu)
+        public async void Update(MenuEntity menu)
         {
-            throw new NotImplementedException();
+            var uri = new Uri(API + $"/menu/{menu.Id}");
+            ImageHandler(menu, uri);
+
+            var json = JsonConvert.SerializeObject(menu);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            Debug.WriteLine(json);
+
+            try
+            {
+                HttpResponseMessage response = null;
+                response = await client.PutAsync(uri, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine(@" Menu Succesfully saved");
+                }
+                else
+                {
+                    Debug.WriteLine(response.StatusCode + " ");
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("ERROR 404 - " + e);
+            }
+        }
+
+        private void ImageHandler(MenuEntity menu, Uri uri)
+        {
+            foreach (var dish in menu.Dishes)
+            {
+                var bytes = ConvertToByteArray(dish.Image);
+                var imageContent = new StringContent(JsonConvert.SerializeObject(new { dishName = dish.Name, imageBytes = bytes }), Encoding.UTF8, "application/json");
+
+                HttpResponseMessage imageResponse = client.PostAsync(new Uri(uri + "/UploadImage"), imageContent).Result;
+
+                if (imageResponse.IsSuccessStatusCode)
+                {
+                    dish.Image = imageResponse.Content.ReadAsStringAsync().Result.Replace("\"", "");
+                }
+            }
         }
     }
 }
