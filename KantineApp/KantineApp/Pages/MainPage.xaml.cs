@@ -12,6 +12,7 @@ namespace KantineApp
         public MainPage()
         {
             InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, false);            
         }
     }
 }

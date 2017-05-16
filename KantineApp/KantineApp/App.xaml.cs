@@ -13,10 +13,10 @@ namespace KantineApp
         {
             InitializeComponent();
             NavigationPage navPage = new NavigationPage(new MainPage())
-            {
+            {          
                 BarBackgroundColor = Color.FromHex("#222"),
-                BarTextColor = Color.FromHex("#ededed")
-            };
+                BarTextColor = Color.FromHex("#ededed")                
+            };            
             MainPage = navPage;         
         }
 
