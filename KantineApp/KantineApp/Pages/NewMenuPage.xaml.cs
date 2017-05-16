@@ -29,9 +29,9 @@ namespace KantineApp.Pages
             DishWrapperStack.Children.Add(NewDishStack());
         }
 
-        private void PickPhoto()
         {
-            DisplayAlert("Info", "Pick a photo is NOT IMPLEMENTED YET!", "OK");
+            //DisplayAlert("Info", "Pick a photo is NOT IMPLEMENTED YET!", "OK");
+            await Navigation.PushModalAsync(new GalleryPage());
         }
 
         private void TakePhoto(Dish dish)
@@ -88,7 +88,7 @@ namespace KantineApp.Pages
 
             takePhotoBtn.Clicked += (sender, args) => { TakePhoto(dish); };
             dishName.TextChanged += (sender, args) => { SaveDishName(dish, dishName.Text); };
-            //pickPhotoBtn.Clicked += (sender, args) => { PickPhoto(dish); };
+
             _dishes.Add(dish);
             return dishStack;
         }

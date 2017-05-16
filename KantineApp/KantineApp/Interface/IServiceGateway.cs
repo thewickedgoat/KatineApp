@@ -37,5 +37,7 @@ namespace KantineApp.Interface
         /// <param name="id"></param>
         /// <returns></returns>
         Task<bool> Delete(int id);
+
+        Task<List<string>> GetAllImages();
     }
 }

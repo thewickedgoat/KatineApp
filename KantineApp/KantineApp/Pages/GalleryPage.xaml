@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KantineApp.Pages.GalleryPage">
+    <StackLayout>
+        <Grid x:Name="imageGrid" VerticalOptions="FillAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+    </StackLayout>
+    <!--<Button x:Name="chooseimage" Text="Vælg billed" Clicked="ChooseImage_Clicked"></Button>-->
+
+</ContentPage>

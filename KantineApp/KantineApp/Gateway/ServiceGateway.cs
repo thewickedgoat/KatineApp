@@ -131,6 +131,26 @@ namespace KantineApp.Gateway
             return menus;
         }
 
+        public async Task<List<string>> GetAllImages()
+        {
+            var uri = new Uri(API + "/Menu/GetAllImages");
+            var images = new List<string>();
+            try
+            {
+                var response = await client.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    images = JsonConvert.DeserializeObject<List<string>>(content);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return images;
+        }
+
         public async void Update(MenuEntity menu)
         {
             var uri = new Uri(API + $"/menu/{menu.Id}");
@@ -176,5 +196,7 @@ namespace KantineApp.Gateway
                 }
             }
         }
+
+
     }
 }
