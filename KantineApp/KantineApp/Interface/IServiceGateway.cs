@@ -29,7 +29,7 @@ namespace KantineApp.Interface
         Task<List<MenuEntity>> ReadAll();
 
 
-        void Update(MenuEntity menu);
+        Task<bool> Update(MenuEntity menu);
 
         /// <summary>
         /// Delete menu by id.

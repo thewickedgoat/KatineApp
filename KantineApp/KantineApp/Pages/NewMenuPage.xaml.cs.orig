@@ -103,8 +103,13 @@ namespace KantineApp.Pages
             takePhotoBtn.Clicked += (sender, args) => { TakeNewPhoto(dish); };
             removeDishBtn.Clicked += (sender, args) => { RemoveDish(dish, dishStack); };
             dishName.TextChanged += (sender, args) => { SaveDishName(dish, dishName.Text); };
+<<<<<<< HEAD
 
+            _dishes.Add(dish);
+=======
+            //pickPhotoBtn.Clicked += (sender, args) => { PickPhoto(dish); };
             menuToCreate.Dishes.Add(dish);
+>>>>>>> origin/master
             return dishStack;
         }
         private void RemoveDish(Dish dish, StackLayout dishStack)

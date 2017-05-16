@@ -23,7 +23,7 @@ namespace KantineApp.Droid.CameraHandler
 
         public void AddPhotoTakenEventHandler(PhotoTaken pt)
         {
-            PhotoTakenEvent += pt;
+            PhotoTakenEvent = pt;
 
         }
 

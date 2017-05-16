@@ -1,43 +1,50 @@
-﻿using System;
+﻿using KantineApp.Entity;
+using KantineApp.Interface;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using KantineApp.Entity;
-using KantineApp.Interface;
+
 using Xamarin.Forms;
-using System.Diagnostics;
+using Xamarin.Forms.Xaml;
 
 namespace KantineApp.Pages
 {
-    public partial class NewMenuPage : ContentPage
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class EditMenuPage : ContentPage
     {
-
         //readonly IRepository _repo = Factory.GetRepository;
         private IServiceGateway _serviceGateway = Factory.GetServiceGateway;
-        private MenuEntity menuToCreate;
+        private MenuEntity menuToUpdate;
         private Button takePhotoBtn = new Button();
         private Button pickPhotoBtn = new Button();
         private Button removeDishBtn = new Button();
         private Dish _tmpDish = null;
         ICameraHandler _cameraHandler;
 
-        public NewMenuPage()
+        public EditMenuPage(MenuEntity menu)
         {
             InitializeComponent();
-            menuToCreate = new MenuEntity();
-            menuToCreate.Dishes = new List<Dish>();
+            menuToUpdate = menu;
             _cameraHandler = DependencyService.Get<ICameraHandler>();
             _cameraHandler.AddPhotoTakenEventHandler(PhotoReceived); // Callback
-            DishWrapperStack.Children.Add(NewDishStack(new Dish()));
+
+            var dishes = new List<StackLayout>();
+            foreach (var dish in menuToUpdate.Dishes)
+            {
+                DishWrapperStack.Children.Add(NewDishStack(dish));
+            }
+            //DishWrapperStack.Children.Add(NewDishStack(new Dish()));
         }
 
+        private void PickPhoto()
         {
-            //DisplayAlert("Info", "Pick a photo is NOT IMPLEMENTED YET!", "OK");
-            await Navigation.PushModalAsync(new GalleryPage());
+            DisplayAlert("Info", "Pick a photo is NOT IMPLEMENTED YET!", "OK");
         }
 
-        private void TakeNewPhoto(Dish dish)
+        private void TakePhoto(Dish dish)
         {
             if (_tmpDish != null)
                 Debug.WriteLine("one try");
@@ -48,10 +55,7 @@ namespace KantineApp.Pages
         public void PhotoReceived(string fileName)
         {
             _tmpDish.Image = fileName;
-            if (_tmpDish != null)
-            {
-                _tmpDish = null;
-            }
+            _tmpDish = null;
             Debug.WriteLine(fileName);
         }
 
@@ -90,7 +94,16 @@ namespace KantineApp.Pages
             };
 
             dishStack.Children.Add(dishName);
-            dish.Name = dishName.Text;
+
+            if (dish.Name != null)
+            {
+                dishName.Text = dish.Name;
+            }
+            else
+            {
+                dish.Name = dishName.Text;
+                menuToUpdate.Dishes.Add(dish);
+            }
 
             takePhotoBtn.Image = "camera.png";
             pickPhotoBtn.Image = "file.png";
@@ -100,17 +113,17 @@ namespace KantineApp.Pages
             dishStack.Children.Add(removeDishBtn);
 
 
-            takePhotoBtn.Clicked += (sender, args) => { TakeNewPhoto(dish); };
+            takePhotoBtn.Clicked += (sender, args) => { TakePhoto(dish); };
             removeDishBtn.Clicked += (sender, args) => { RemoveDish(dish, dishStack); };
             dishName.TextChanged += (sender, args) => { SaveDishName(dish, dishName.Text); };
-
-            menuToCreate.Dishes.Add(dish);
+            //pickPhotoBtn.Clicked += (sender, args) => { PickPhoto(dish); };
+            
             return dishStack;
         }
         private void RemoveDish(Dish dish, StackLayout dishStack)
         {
             DishWrapperStack.Children.Remove(dishStack);
-            menuToCreate.Dishes.Remove(dish);
+            menuToUpdate.Dishes.Remove(dish);
         }
 
         private void SaveDishName(Dish dish, string dishName)
@@ -133,14 +146,23 @@ namespace KantineApp.Pages
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CreateNewMenu_Button_OnClicked(object sender, EventArgs e)
+        private async void CreateNewMenu_Button_OnClicked(object sender, EventArgs e)
         {
-            menuToCreate.Date = dPicker.Date;
-            _serviceGateway.Create(menuToCreate);
-            DishWrapperStack.Children.Clear();
-            menuToCreate = new MenuEntity();
-            menuToCreate.Dishes = new List<Dish>();
-            DishWrapperStack.Children.Add(NewDishStack(new Dish()));
+
+            var result = await _serviceGateway.Update(menuToUpdate);
+            //DishWrapperStack.Children.Clear();
+            //menuToUpdate = new MenuEntity();
+            //menuToUpdate.Dishes = new List<Dish>();
+            //DishWrapperStack.Children.Add(NewDishStack(new Dish()));
+            if (result)
+            {
+                NavigateBack();
+            }
+        }
+
+        public async void NavigateBack()
+        {
+            await Navigation.PopModalAsync();
         }
 
         /**protected override void OnAppearing()
@@ -151,6 +173,7 @@ namespace KantineApp.Pages
             _dishes.Clear();
             DishWrapperStack.Children.Add(NewDishStack());
         }**/
+
 
     }
 }

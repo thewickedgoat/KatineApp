@@ -50,7 +50,10 @@
     <Compile Include="Interface\IServiceGateway.cs" />
     <Compile Include="Pages\GalleryPage.xaml.cs">
       <DependentUpon>GalleryPage.xaml</DependentUpon>
-    </Compile>
+       </Compile>
+    <Compile Include="Pages\EditMenuPage.xaml.cs">
+      <DependentUpon>EditMenuPage.xaml</DependentUpon>
+    </Compile>   
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -113,6 +116,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Pages\EditMenuPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+    <ItemGroup>
     <EmbeddedResource Include="Pages\GalleryPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
