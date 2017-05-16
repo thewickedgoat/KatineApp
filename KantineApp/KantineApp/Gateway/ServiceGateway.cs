@@ -39,9 +39,8 @@ namespace KantineApp.Gateway
 
         public async void Create(MenuEntity menu)
         {
+            ImageHandler(menu);
             var uri = new Uri(API + "/menu");
-            ImageHandler(menu, uri);
-
             var json = JsonConvert.SerializeObject(menu);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -131,11 +130,10 @@ namespace KantineApp.Gateway
             return menus;
         }
 
-        public async void Update(MenuEntity menu)
+        public async Task<bool> Update(MenuEntity menu)
         {
+            ImageHandler(menu);
             var uri = new Uri(API + $"/menu/{menu.Id}");
-            ImageHandler(menu, uri);
-
             var json = JsonConvert.SerializeObject(menu);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
@@ -149,30 +147,37 @@ namespace KantineApp.Gateway
                 if (response.IsSuccessStatusCode)
                 {
                     Debug.WriteLine(@" Menu Succesfully saved");
+                    return true;
                 }
                 else
                 {
                     Debug.WriteLine(response.StatusCode + " ");
+                    return false;
                 }
             }
             catch (Exception e)
             {
                 Debug.WriteLine("ERROR 404 - " + e);
+                return false;
             }
         }
 
-        private void ImageHandler(MenuEntity menu, Uri uri)
+        private void ImageHandler(MenuEntity menu)
         {
+            var uri = new Uri(API + "/menu/UploadImage");
             foreach (var dish in menu.Dishes)
             {
-                var bytes = ConvertToByteArray(dish.Image);
-                var imageContent = new StringContent(JsonConvert.SerializeObject(new { dishName = dish.Name, imageBytes = bytes }), Encoding.UTF8, "application/json");
-
-                HttpResponseMessage imageResponse = client.PostAsync(new Uri(uri + "/UploadImage"), imageContent).Result;
-
-                if (imageResponse.IsSuccessStatusCode)
+                if (!dish.Image.Contains("http"))
                 {
-                    dish.Image = imageResponse.Content.ReadAsStringAsync().Result.Replace("\"", "");
+                    var bytes = ConvertToByteArray(dish.Image);
+                    var imageContent = new StringContent(JsonConvert.SerializeObject(new { dishName = dish.Name, imageBytes = bytes }), Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage imageResponse = client.PostAsync(uri, imageContent).Result;
+
+                    if (imageResponse.IsSuccessStatusCode)
+                    {
+                        dish.Image = imageResponse.Content.ReadAsStringAsync().Result.Replace("\"", "");
+                    }
                 }
             }
         }

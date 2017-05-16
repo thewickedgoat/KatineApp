@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="KantineApp.Pages.EditMenuPage">
+    <ScrollView>
+        <StackLayout x:Name="OuterWrapperStack" Orientation="Vertical" VerticalOptions="FillAndExpand">
+            <StackLayout x:Name="DateStack">
+                <StackLayout BackgroundColor="#313030" Orientation="Horizontal" HorizontalOptions="FillAndExpand"></StackLayout>
+                <BoxView VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="1" WidthRequest="700" Color="#222"></BoxView>
+            </StackLayout>
+            <StackLayout x:Name="DishWrapperStack" Orientation="Vertical" VerticalOptions="StartAndExpand">
+                <Image x:Name="newImage"/>
+                <Label x:Name="lblFileName" IsVisible="False"/>
+
+            </StackLayout>
+            <StackLayout x:Name="OptionWrapperStack" VerticalOptions="EndAndExpand">
+                <StackLayout x:Name="OptionsStack" Orientation="Horizontal">
+                    <Button BackgroundColor="#313030" TextColor="#ededed" x:Name="NewDishStackBtn" Text="Tilføj Ret" Clicked="AddDishStak" HorizontalOptions="FillAndExpand"></Button>
+                    <Button BackgroundColor="#313030" TextColor="#ededed" x:Name="CreateMenuBtn" Text="Gem Menu" HorizontalOptions="FillAndExpand" Clicked="CreateNewMenu_Button_OnClicked"></Button>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

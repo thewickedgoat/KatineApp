@@ -72,6 +72,11 @@ namespace KantineApp.Pages
                     _serviceGatway.Delete(menu.Id);
                 };
 
+                editBtn.Clicked += (sender, EventArgs) =>
+                {
+                    NavigateToEditMenuPage(menu);
+                };
+
 
                 editBtn.Image = "pencil.png";
                 deleteBtn.Image = "delete.png";
@@ -138,6 +143,11 @@ namespace KantineApp.Pages
             base.OnAppearing();
             MenuHistoryWrapper.Children.Clear();
             AddMenuStacksToPage();
+        }
+
+        private async void NavigateToEditMenuPage(MenuEntity menu)
+        {
+            await Navigation.PushModalAsync(new EditMenuPage(menu));
         }
     }
 }
