@@ -31,10 +31,19 @@ namespace KantineApp.Pages
             DishWrapperStack.Children.Add(NewDishStack(new Dish()));
         }
 
+        private void GallerySubscriber(Dish dish)
+        {
+            MessagingCenter.Subscribe<string>(this, "ChosenImage", (chosenImgUrl) =>
+            {
+                dish.Image = chosenImgUrl;
+            });
+        }
+
         private async void NavigateToPhotoPicker(Dish dish)
         {
             //DisplayAlert("Info", "Pick a photo is NOT IMPLEMENTED YET!", "OK");
             await Navigation.PushModalAsync(new GalleryPage());
+            GallerySubscriber(dish);    
         }
 
         private void TakeNewPhoto(Dish dish)

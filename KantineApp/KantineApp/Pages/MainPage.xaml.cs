@@ -7,6 +7,7 @@ using Xamarin.Forms;
 
 namespace KantineApp
 {
+
     public partial class MainPage
     {
         public MainPage()

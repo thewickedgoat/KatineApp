@@ -13,9 +13,11 @@ namespace KantineApp.Pages
     {
         private IServiceGateway _serviceGatway = Factory.GetServiceGateway;
 
-        Image galleryImage;
-        Image chosenImage;
+
+        private string chosenImgUrl;
+
         List<string> _images;
+
 
         public GalleryPage()
         {
@@ -28,7 +30,6 @@ namespace KantineApp.Pages
         {
             _images = await _serviceGatway.GetAllImages();
             GridRowDefinitions();
-            chosenImage = new Image();
             PopulateGrid();
         }
 
@@ -45,33 +46,36 @@ namespace KantineApp.Pages
             var count = 0;
             foreach (var image in _images)
             {
+                Image galleryImage;
                 var row = count / 3;
                 var col = count % 3;
 
                 var imgurl = image.Insert(image.IndexOf("/upload/") + 8, "c_scale,h_257,w_325/");
-
                 galleryImage = new Image { Aspect = Aspect.Fill, HorizontalOptions = LayoutOptions.FillAndExpand };
                 galleryImage.Source = imgurl;
 
                 imageGrid.Children.Add(galleryImage, col, row);
                 count++;
+                ImageTapRecognizer(imgurl, galleryImage);
             }
         }
 
-        public void ImageTapRecognizer()
+        public void ImageTapRecognizer(string url, Image galleryImage)
         {
             var tap = new TapGestureRecognizer();
             tap.Tapped += (sender, eventArgs) =>
             {
-                galleryImage = chosenImage;
+                galleryImage.FadeTo(0.50, 50);
+                chosenImgUrl = url;
             };
 
             galleryImage.GestureRecognizers.Add(tap);
         }
 
-        private void ChooseImage_Clicked(object sender, EventArgs e)
+        private async void ChooseImage_Clicked(object sender, EventArgs e)
         {
-
+            MessagingCenter.Send(chosenImgUrl, "ChosenImage");
+            await Navigation.PopModalAsync();
         }
     }
-}
+} 

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="KantineApp.Pages.GalleryPage">
     <StackLayout>
+        <StackLayout Orientation="Vertical">
         <Grid x:Name="imageGrid" VerticalOptions="FillAndExpand">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
@@ -11,6 +12,10 @@
             </Grid.ColumnDefinitions>
         </Grid>
     </StackLayout>
-    <!--<Button x:Name="chooseimage" Text="Vælg billed" Clicked="ChooseImage_Clicked"></Button>-->
+    <StackLayout>
+        <Button x:Name="chooseBtn" Text="Vælg billede" FontFamily="fantasy" HorizontalOptions="Center" Clicked="ChooseImage_Clicked"></Button>
+    </StackLayout>
+    </StackLayout>
+
 
 </ContentPage>
