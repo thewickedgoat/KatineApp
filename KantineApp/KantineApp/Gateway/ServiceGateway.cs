@@ -28,12 +28,12 @@ namespace KantineApp.Gateway
 
         private Byte[] ConvertToByteArray(string input)
         {
-            var icon = BitmapFactory.DecodeFile(input);
+            var image = BitmapFactory.DecodeFile(input);
             var ms = new MemoryStream();
 
-            icon.Compress(Bitmap.CompressFormat.Jpeg, 80, ms);
-            var iconBytes = ms.ToArray();
-            return iconBytes;
+            image.Compress(Bitmap.CompressFormat.Jpeg, 80, ms);
+            var imageBytes = ms.ToArray();
+            return imageBytes;
         }
 
 
@@ -131,7 +131,7 @@ namespace KantineApp.Gateway
         }
 
         public async Task<List<string>> GetAllImages()
-  
+
         {
             var uri = new Uri(API + "/Menu/GetAllImages");
             var images = new List<string>();
@@ -150,7 +150,7 @@ namespace KantineApp.Gateway
             }
             return images;
         }
-      public async Task<bool> Update(MenuEntity menu)
+        public async Task<bool> Update(MenuEntity menu)
         {
             ImageHandler(menu);
             var uri = new Uri(API + $"/menu/{menu.Id}");
@@ -190,7 +190,12 @@ namespace KantineApp.Gateway
                 if (!dish.Image.Contains("http"))
                 {
                     var bytes = ConvertToByteArray(dish.Image);
-                    var imageContent = new StringContent(JsonConvert.SerializeObject(new { dishName = dish.Name, imageBytes = bytes }), Encoding.UTF8, "application/json");
+                    var imageContent = new StringContent
+                        (JsonConvert.SerializeObject(new
+                        {
+                            dishName = dish.Name,
+                            imageBytes = bytes
+                        }), Encoding.UTF8, "application/json");
 
                     HttpResponseMessage imageResponse = client.PostAsync(uri, imageContent).Result;
 
