@@ -22,7 +22,6 @@ namespace KantineApp.Pages
         public GalleryPage()
         {
             InitializeComponent();
-
             InitGallery();
         }
 

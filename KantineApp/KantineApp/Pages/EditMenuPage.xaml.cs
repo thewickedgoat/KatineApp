@@ -38,10 +38,18 @@ namespace KantineApp.Pages
             }
             //DishWrapperStack.Children.Add(NewDishStack(new Dish()));
         }
-
-        private void PickPhoto()
+        private void GallerySubscriber(Dish dish)
         {
-            DisplayAlert("Info", "Pick a photo is NOT IMPLEMENTED YET!", "OK");
+            MessagingCenter.Subscribe<string>(this, "ChosenImage", (chosenImgUrl) =>
+            {
+                dish.Image = chosenImgUrl;
+            });
+        }
+
+        private async void PickPhoto(Dish dish)
+        {
+            await Navigation.PushModalAsync(new GalleryPage());
+            GallerySubscriber(dish);
         }
 
         private void TakePhoto(Dish dish)
@@ -107,7 +115,7 @@ namespace KantineApp.Pages
 
             takePhotoBtn.Image = "camera.png";
             pickPhotoBtn.Image = "file.png";
-            removeDishBtn.Text = "Tis";
+            removeDishBtn.Image = "remove.png";
             dishStack.Children.Add(takePhotoBtn);
             dishStack.Children.Add(pickPhotoBtn);
             dishStack.Children.Add(removeDishBtn);
@@ -116,8 +124,8 @@ namespace KantineApp.Pages
             takePhotoBtn.Clicked += (sender, args) => { TakePhoto(dish); };
             removeDishBtn.Clicked += (sender, args) => { RemoveDish(dish, dishStack); };
             dishName.TextChanged += (sender, args) => { SaveDishName(dish, dishName.Text); };
-            //pickPhotoBtn.Clicked += (sender, args) => { PickPhoto(dish); };
-            
+            pickPhotoBtn.Clicked += (sender, args) => { PickPhoto(dish); };
+
             return dishStack;
         }
         private void RemoveDish(Dish dish, StackLayout dishStack)

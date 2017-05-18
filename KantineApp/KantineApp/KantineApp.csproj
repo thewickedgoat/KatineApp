@@ -39,7 +39,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="DLL\MockRepository.cs" />
-    <Compile Include="DLL\Repository.cs" />
     <Compile Include="Entity\Dish.cs" />
     <Compile Include="Entity\MenuEntity.cs" />
     <Compile Include="Factory.cs" />
@@ -50,10 +49,10 @@
     <Compile Include="Interface\IServiceGateway.cs" />
     <Compile Include="Pages\GalleryPage.xaml.cs">
       <DependentUpon>GalleryPage.xaml</DependentUpon>
-       </Compile>
+    </Compile>
     <Compile Include="Pages\EditMenuPage.xaml.cs">
       <DependentUpon>EditMenuPage.xaml</DependentUpon>
-    </Compile>   
+    </Compile>
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -121,7 +120,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-    <ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Pages\GalleryPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>

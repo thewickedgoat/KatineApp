@@ -103,7 +103,7 @@ namespace KantineApp.Pages
 
             takePhotoBtn.Image = "camera.png";
             pickPhotoBtn.Image = "file.png";
-            removeDishBtn.Text = "Tis";
+            removeDishBtn.Image = "remove.png";
             dishStack.Children.Add(takePhotoBtn);
             dishStack.Children.Add(pickPhotoBtn);
             dishStack.Children.Add(removeDishBtn);
