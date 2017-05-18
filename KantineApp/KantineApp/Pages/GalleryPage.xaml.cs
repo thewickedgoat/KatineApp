@@ -15,7 +15,7 @@ namespace KantineApp.Pages
 
 
         private string chosenImgUrl;
-
+        private Image latestChosenImage;
         List<string> _images;
 
 
@@ -64,7 +64,11 @@ namespace KantineApp.Pages
             var tap = new TapGestureRecognizer();
             tap.Tapped += (sender, eventArgs) =>
             {
+                if(latestChosenImage != null)
+                latestChosenImage.FadeTo(1, 50);
+
                 galleryImage.FadeTo(0.50, 50);
+                latestChosenImage = galleryImage;
                 chosenImgUrl = url;
             };
 
