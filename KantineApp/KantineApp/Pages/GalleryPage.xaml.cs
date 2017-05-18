@@ -73,7 +73,9 @@ namespace KantineApp.Pages
 
         private async void ChooseImage_Clicked(object sender, EventArgs e)
         {
-            MessagingCenter.Send(chosenImgUrl, "ChosenImage");
+            var index = chosenImgUrl.IndexOf("/upload/");
+            var pureImgUrl = chosenImgUrl.Remove(index + 8, 20);
+            MessagingCenter.Send(pureImgUrl, "ChosenImage");
             await Navigation.PopModalAsync();
         }
     }
