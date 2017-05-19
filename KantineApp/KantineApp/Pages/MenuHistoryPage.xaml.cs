@@ -64,12 +64,23 @@ namespace KantineApp.Pages
                 {
                     TextColor = Color.FromHex("#ededed"),
                     BackgroundColor = Color.FromHex("#313030"),
-                    WidthRequest = 50,
+                    WidthRequest = 50
                 };
 
                 deleteBtn.Clicked += (sender, EventArgs) =>
                 {
-                    _serviceGatway.Delete(menu.Id);
+                    Device.BeginInvokeOnMainThread(async () =>
+                    {
+                        var answer = await DisplayAlert("Slet menu", "Er du sikker på du vil slette denne menu?", "Ja", "Nej");
+                        if (answer)
+                        {
+                            _serviceGatway.Delete(menu.Id);
+                            OnAppearing();
+                        }
+
+                    });
+                    OnAppearing();
+                    //_serviceGatway.Delete(menu.Id);
                 };
 
                 editBtn.Clicked += (sender, EventArgs) =>
