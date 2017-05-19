@@ -42,6 +42,7 @@ namespace KantineApp.Pages
         {
             MessagingCenter.Subscribe<string>(this, "ChosenImage", (chosenImgUrl) =>
             {
+                MessagingCenter.Unsubscribe<string>(this, "ChosenImage");
                 dish.Image = chosenImgUrl;
             });
         }
