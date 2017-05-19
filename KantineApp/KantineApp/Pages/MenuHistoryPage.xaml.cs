@@ -11,7 +11,6 @@ namespace KantineApp.Pages
 {
     public partial class MenuHistoryPage : ContentPage
     {
-        //readonly IRepository _repo = Factory.GetRepository;
         private IServiceGateway _serviceGatway = Factory.GetServiceGateway;
         List<MenuEntity> _menus = new List<MenuEntity>();
 
@@ -49,23 +48,13 @@ namespace KantineApp.Pages
             {
                 var menuStack = new StackLayout() { Spacing = 0 };
                 var stack = new StackLayout()
-                {
-                    Orientation = StackOrientation.Horizontal,
-                    BackgroundColor = Color.FromHex("#313030"),
-                };
+                { Orientation = StackOrientation.Horizontal, BackgroundColor = Color.FromHex("#313030"), };
+
                 var editBtn = new Button()
-                {
-                    TextColor = Color.FromHex("#ededed"),
-                    BackgroundColor = Color.FromHex("#313030"),
-                    WidthRequest = 50
-                };
+                { TextColor = Color.FromHex("#ededed"), BackgroundColor = Color.FromHex("#313030"), WidthRequest = 50, Image = "pencil.png" };
 
                 var deleteBtn = new Button()
-                {
-                    TextColor = Color.FromHex("#ededed"),
-                    BackgroundColor = Color.FromHex("#313030"),
-                    WidthRequest = 50
-                };
+                { TextColor = Color.FromHex("#ededed"), BackgroundColor = Color.FromHex("#313030"), WidthRequest = 50, Image = "delete.png" };
 
                 deleteBtn.Clicked += (sender, EventArgs) =>
                 {
@@ -74,23 +63,17 @@ namespace KantineApp.Pages
                         var answer = await DisplayAlert("Slet menu", "Er du sikker på du vil slette denne menu?", "Ja", "Nej");
                         if (answer)
                         {
+                            // Await is called in Delete()!
                             _serviceGatway.Delete(menu.Id);
                             OnAppearing();
                         }
-
                     });
-                    OnAppearing();
-                    //_serviceGatway.Delete(menu.Id);
                 };
 
                 editBtn.Clicked += (sender, EventArgs) =>
                 {
                     NavigateToEditMenuPage(menu);
                 };
-
-
-                editBtn.Image = "pencil.png";
-                deleteBtn.Image = "delete.png";
 
                 var dateLbl = new Label()
                 {
@@ -113,32 +96,19 @@ namespace KantineApp.Pages
                 foreach (var dish in menu.Dishes)
                 {
                     var horizontalLine = new BoxView()
-                    {
-                        VerticalOptions = LayoutOptions.Center,
-                        HorizontalOptions = LayoutOptions.FillAndExpand,
-                        HeightRequest = 1,
-                        Color = Color.FromHex("#222")
-                    };
+                    { VerticalOptions = LayoutOptions.Center, HorizontalOptions = LayoutOptions.FillAndExpand, HeightRequest = 1, Color = Color.FromHex("#222") };
 
                     /* The dishwrapper wraps a dish with it's image horizontal in the dishstack.*/
                     var dishWrapper = new StackLayout() { Orientation = StackOrientation.Horizontal };
+
                     dishWrapper.Children.Add(new Label()
-                    {
-                        Text = dish.Name,
-                        HorizontalOptions = LayoutOptions.StartAndExpand,
-                        VerticalTextAlignment = TextAlignment.Center
-                    });
+                    { Text = dish.Name, HorizontalOptions = LayoutOptions.StartAndExpand, VerticalTextAlignment = TextAlignment.Center });
 
                     if (!string.IsNullOrEmpty(dish.Image))
                     {
-
                         var imgurl = dish.Image.Insert(dish.Image.IndexOf("/upload/") + 8, "c_scale,h_257,w_325/");
                         dishWrapper.Children.Add(new Image()
-                        {
-                            Source = ImageSource.FromUri(new Uri(imgurl)),
-                            HeightRequest = 80,
-                            HorizontalOptions = LayoutOptions.End
-                        });
+                        { Source = ImageSource.FromUri(new Uri(imgurl)), HeightRequest = 80, HorizontalOptions = LayoutOptions.End });
                     }
                     dishStack.Children.Add(dishWrapper);
                     dishStack.Children.Add(horizontalLine);

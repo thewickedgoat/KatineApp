@@ -12,14 +12,13 @@ namespace KantineApp.Pages
 {
     public partial class NewMenuPage : ContentPage
     {
-        //readonly IRepository _repo = Factory.GetRepository;
         private IServiceGateway _serviceGateway = Factory.GetServiceGateway;
+        ICameraHandler _cameraHandler;
         private MenuEntity menuToCreate;
         private Button takePhotoBtn = new Button();
         private Button pickPhotoBtn = new Button();
         private Button removeDishBtn = new Button();
         private Dish _tmpDish = null;
-        ICameraHandler _cameraHandler;
 
         public NewMenuPage()
         {
@@ -42,9 +41,8 @@ namespace KantineApp.Pages
 
         private async void NavigateToPhotoPicker(Dish dish)
         {
-            //DisplayAlert("Info", "Pick a photo is NOT IMPLEMENTED YET!", "OK");
             await Navigation.PushModalAsync(new GalleryPage());
-            GallerySubscriber(dish);    
+            GallerySubscriber(dish);
         }
 
         private void TakeNewPhoto(Dish dish)
@@ -65,7 +63,6 @@ namespace KantineApp.Pages
             Debug.WriteLine(fileName);
         }
 
-
         /// <summary>
         /// Create a new Dish stacklayout, with text-entry and buttons for image options.
         /// </summary>
@@ -73,44 +70,29 @@ namespace KantineApp.Pages
         public StackLayout NewDishStack(Dish dish)
         {
             takePhotoBtn = new Button()
-            {
-                BackgroundColor = Color.FromHex("#313030"),
-                WidthRequest = 50
-            };
+            { BackgroundColor = Color.FromHex("#313030"), WidthRequest = 50, Image = "camera.png" };
+
             pickPhotoBtn = new Button()
-            {
-                BackgroundColor = Color.FromHex("#313030"),
-                WidthRequest = 50
-            };
+            { BackgroundColor = Color.FromHex("#313030"), WidthRequest = 50, Image = "file.png" };
+
             removeDishBtn = new Button()
-            {
-                BackgroundColor = Color.FromHex("#313030"),
-                WidthRequest = 50
-            };
+            { BackgroundColor = Color.FromHex("#313030"), WidthRequest = 50, Image = "remove.png" };
 
             var dishStack = new StackLayout()
-            {
-                Orientation = StackOrientation.Horizontal,
-                VerticalOptions = LayoutOptions.StartAndExpand
-            };
+            { Orientation = StackOrientation.Horizontal, VerticalOptions = LayoutOptions.StartAndExpand };
+
             var dishName = new Entry()
-            {
-                Placeholder = "Rettens navn",
-                HorizontalOptions = LayoutOptions.FillAndExpand
-            };
+            { Placeholder = "Rettens navn", HorizontalOptions = LayoutOptions.FillAndExpand };
 
             dishStack.Children.Add(dishName);
             dish.Name = dishName.Text;
 
-            takePhotoBtn.Image = "camera.png";
-            pickPhotoBtn.Image = "file.png";
-            removeDishBtn.Image = "remove.png";
             dishStack.Children.Add(takePhotoBtn);
             dishStack.Children.Add(pickPhotoBtn);
             dishStack.Children.Add(removeDishBtn);
 
-        pickPhotoBtn.Clicked += (sender, args) => { NavigateToPhotoPicker(dish); };
-        takePhotoBtn.Clicked += (sender, args) => { TakeNewPhoto(dish); };
+            pickPhotoBtn.Clicked += (sender, args) => { NavigateToPhotoPicker(dish); };
+            takePhotoBtn.Clicked += (sender, args) => { TakeNewPhoto(dish); };
             removeDishBtn.Clicked += (sender, args) => { RemoveDish(dish, dishStack); };
             dishName.TextChanged += (sender, args) => { SaveDishName(dish, dishName.Text); };
 
@@ -157,6 +139,5 @@ namespace KantineApp.Pages
         {
             _cameraHandler.AddPhotoTakenEventHandler(PhotoReceived); // Callback
         }
-
     }
 }

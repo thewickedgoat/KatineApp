@@ -13,11 +13,9 @@ namespace KantineApp.Pages
     {
         private IServiceGateway _serviceGatway = Factory.GetServiceGateway;
 
-
         private string chosenImgUrl;
         private Image latestChosenImage;
         List<string> _images;
-
 
         public GalleryPage()
         {

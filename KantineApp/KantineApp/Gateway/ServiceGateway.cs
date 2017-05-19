@@ -18,7 +18,6 @@ namespace KantineApp.Gateway
     {
         HttpClient client;
         public string API = "http://cantine-restapi-webapp.azurewebsites.net/api";
-        //public string API = "http://169.254.80.80:7874/api";
 
         public ServiceGateway()
         {
@@ -26,17 +25,7 @@ namespace KantineApp.Gateway
             client.MaxResponseContentBufferSize = 256000;
         }
 
-        private Byte[] ConvertToByteArray(string input)
-        {
-            var image = BitmapFactory.DecodeFile(input);
-            var ms = new MemoryStream();
-
-            image.Compress(Bitmap.CompressFormat.Jpeg, 80, ms);
-            var imageBytes = ms.ToArray();
-            return imageBytes;
-        }
-
-
+        /*CREATE*/
         public async void Create(MenuEntity menu)
         {
             ImageHandler(menu);
@@ -64,30 +53,9 @@ namespace KantineApp.Gateway
             {
                 Debug.WriteLine("ERROR 404 - " + e);
             }
-
         }
 
-        public async Task<bool> Delete(int id)
-        {
-            var uri = new Uri(API + $"/Menu/{id}");
-            bool isDeleted = false;
-            try
-            {
-                var response = await client.DeleteAsync(uri);
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    isDeleted = JsonConvert.DeserializeObject<bool>(content);
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            return isDeleted;
-
-        }
-
+        /*READ BY ID*/
         public async Task<MenuEntity> Read(int id)
         {
             var uri = new Uri(API + $"/Menu/{id}");
@@ -107,9 +75,9 @@ namespace KantineApp.Gateway
                 throw;
             }
             return menu;
-
         }
 
+        /*READ ALL*/
         public async Task<List<MenuEntity>> ReadAll()
         {
             var menus = new List<MenuEntity>();
@@ -130,26 +98,7 @@ namespace KantineApp.Gateway
             return menus;
         }
 
-        public async Task<List<string>> GetAllImages()
-
-        {
-            var uri = new Uri(API + "/Menu/GetAllImages");
-            var images = new List<string>();
-            try
-            {
-                var response = await client.GetAsync(uri);
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStringAsync();
-                    images = JsonConvert.DeserializeObject<List<string>>(content);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return images;
-        }
+        /*UPDATE*/
         public async Task<bool> Update(MenuEntity menu)
         {
             ImageHandler(menu);
@@ -182,6 +131,58 @@ namespace KantineApp.Gateway
             }
         }
 
+        /*DELETE*/
+        public async Task<bool> Delete(int id)
+        {
+            var uri = new Uri(API + $"/Menu/{id}");
+            bool isDeleted = false;
+            try
+            {
+                var response = await client.DeleteAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    isDeleted = JsonConvert.DeserializeObject<bool>(content);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return isDeleted;
+        }
+
+        /*GET ALL IMAGES*/
+        public async Task<List<string>> GetAllImages()
+        {
+            var uri = new Uri(API + "/Menu/GetAllImages");
+            var images = new List<string>();
+            try
+            {
+                var response = await client.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    images = JsonConvert.DeserializeObject<List<string>>(content);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return images;
+        }
+ 
+        private Byte[] ConvertToByteArray(string input)
+        {
+            var image = BitmapFactory.DecodeFile(input);
+            var ms = new MemoryStream();
+
+            image.Compress(Bitmap.CompressFormat.Jpeg, 80, ms);
+            var imageBytes = ms.ToArray();
+            return imageBytes;
+        }
+      
         private void ImageHandler(MenuEntity menu)
         {
             var uri = new Uri(API + "/menu/UploadImage");
@@ -206,7 +207,5 @@ namespace KantineApp.Gateway
                 }
             }
         }
-
-
     }
 }
