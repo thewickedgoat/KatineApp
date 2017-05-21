@@ -17,6 +17,9 @@ namespace KantineApp.Pages
         private Image latestChosenImage;
         List<string> _images;
 
+        private readonly string Scale_Text = "c_scale,h_257,w_325/";
+        private readonly string Upload_Text = "/upload/";
+
         public GalleryPage()
         {
             InitializeComponent();
@@ -47,7 +50,7 @@ namespace KantineApp.Pages
                 var row = count / 3;
                 var col = count % 3;
 
-                var imgurl = image.Insert(image.IndexOf("/upload/") + 8, "c_scale,h_257,w_325/");
+                var imgurl = image.Insert(image.IndexOf(Upload_Text) + Upload_Text.Length, Scale_Text);
                 galleryImage = new Image { Aspect = Aspect.Fill, HorizontalOptions = LayoutOptions.FillAndExpand };
                 galleryImage.Source = imgurl;
 
@@ -75,8 +78,8 @@ namespace KantineApp.Pages
 
         private async void ChooseImage_Clicked(object sender, EventArgs e)
         {
-            var index = chosenImgUrl.IndexOf("/upload/");
-            var pureImgUrl = chosenImgUrl.Remove(index + 8, 20);
+            var index = chosenImgUrl.IndexOf(Upload_Text);
+            var pureImgUrl = chosenImgUrl.Remove(index + Upload_Text.Length, Scale_Text.Length);
             MessagingCenter.Send(pureImgUrl, "ChosenImage");
             await Navigation.PopModalAsync();
         }

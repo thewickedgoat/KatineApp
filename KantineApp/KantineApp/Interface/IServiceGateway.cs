@@ -38,6 +38,10 @@ namespace KantineApp.Interface
         /// <returns></returns>
         Task<bool> Delete(int id);
 
+        /// <summary>
+        /// Returns a list of all the menue's images.
+        /// </summary>
+        /// <returns></returns>
         Task<List<string>> GetAllImages();
     }
 }
